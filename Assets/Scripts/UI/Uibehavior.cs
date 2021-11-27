@@ -21,7 +21,7 @@ public class Uibehavior : MonoBehaviour
         int y = 0;
         foreach (Transform tr in transform)
         {
-            if (tr.gameObject.GetComponent<Slot>())
+            if (tr.gameObject.GetComponent<Slot>() && tr.CompareTag("Slots"))
             {
                 Slots[x,y] = ( tr.gameObject.GetComponent<Slot>());
             }
@@ -78,7 +78,7 @@ public class Uibehavior : MonoBehaviour
              
                 if (Slots[x,y].GetHovered() && CurrentSlots.Count < Brush.x * Brush.y)
                 {
-                    Debug.Log("s");
+                   
                     if (CurrentSlots.Count <= 0)
                     {
                         currentIdx = new Vector2Int(x, y);

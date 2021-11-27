@@ -6,7 +6,8 @@ public class SwitchInventory : MonoBehaviour
 {
     public GameObject GO;
     public MonoBehaviour View;
-    
+
+    public DetectIronScript DTS;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +25,15 @@ public class SwitchInventory : MonoBehaviour
             Cursor.visible = GO.activeSelf;
             if(GO.activeSelf)  Cursor.lockState = CursorLockMode.None;
             else  Cursor.lockState = CursorLockMode.Locked;
-           
+
+
+            if (DTS.getDetected() != null)
+            {
+                Debug.Log("Items trouvé");
+            }
+            
+            
+            
             
             
             
