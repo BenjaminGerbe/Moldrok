@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class DetectIronScript : MonoBehaviour
@@ -23,6 +24,10 @@ public class DetectIronScript : MonoBehaviour
         {
             detectItems = false;
             GO = null;
+           
+            
+            
+            
         }
     }
 
