@@ -9,6 +9,7 @@ public class telescopeScript : MonoBehaviour
     public GameObject Tele;
     public float Zoom;
     public float OriginFov;
+    public float FogStorm;
 
     private Camera cam;
     // Start is called before the first frame update
@@ -16,22 +17,23 @@ public class telescopeScript : MonoBehaviour
     {
         cam = GetComponent<Camera>();
         OriginFov = cam.fieldOfView;
+        FogStorm = RenderSettings.fogDensity;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButtonDown(1))
         {
             Tele.gameObject.SetActive(true);
             cam.fieldOfView = 12.5f;
-            RenderSettings.fogDensity = 0.0035f;
+            RenderSettings.fogDensity = FogStorm - 0.015f;
         }
-        else
+        else  if (Input.GetMouseButtonUp(1))
         {
             Tele.gameObject.SetActive(false);
             cam.fieldOfView = OriginFov;
-            RenderSettings.fogDensity = 0.005f;
+            RenderSettings.fogDensity = FogStorm;
         }
     }
 }

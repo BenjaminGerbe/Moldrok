@@ -46,6 +46,7 @@ Shader "Unlit/CellShadingTexture"
             float _V1;
             float _V2;
             float _ShadowThreshold;
+            float3 _Lightning;
 
             struct Input
             {
@@ -127,7 +128,7 @@ Shader "Unlit/CellShadingTexture"
                 float3 output;
                 output = diffuse;
 
-                output = saturate( lerp(  _Shadow * col , col, diffuse.xxx));
+                output = saturate( lerp(  _Shadow * col   , col, diffuse.xxx));
 
                /* float atten = LIGHT_ATTENUATION(IN);
                 float3 color;
@@ -138,6 +139,7 @@ Shader "Unlit/CellShadingTexture"
   q              color = step(_Step, color);
                 float3 output = _Couleur;
                 output += atten;*/
+                
              
                 UNITY_APPLY_FOG(IN.fogCoord, output);
                 return half4(output,1);
