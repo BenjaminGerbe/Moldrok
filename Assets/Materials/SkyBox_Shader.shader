@@ -64,6 +64,7 @@ Shader "Unlit/SkyBox_Shader"
             fixed4 frag (v2f i) : SV_Target
             {
                 float value = clamp(i.uv.y + _value,0,1 );
+                
                 float3 color = lerp(_BottomColor,_TopColor,value);
 
     

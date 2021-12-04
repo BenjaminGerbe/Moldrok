@@ -6,14 +6,24 @@ using UnityEngine;
 public class LifeManager : MonoBehaviour
 {
     public TextMeshProUGUI lifeTxt;
-
+        
     private float life = 10;
-
+    public Transform player;
+    public float distanceHit;
     public float GetLife()
     {
         return this.life;
     }
-    
+
+    public void dommage(float incrementation)
+    {
+        var position = player.position;
+        if (Mathf.Sqrt( Mathf.Pow(position.x,2) + Mathf.Pow( position.z,2)) > distanceHit )
+        {
+            this.life -= incrementation;
+        }
+       
+    }
 
 
     // Start is called before the first frame update
@@ -25,6 +35,7 @@ public class LifeManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         lifeTxt.text = life.ToString();
     }
 }

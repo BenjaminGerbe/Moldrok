@@ -9,7 +9,7 @@ Shader "Unlit/NoFogTexture"
     {
         Tags {"Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent"}
                 
-        ZWrite On
+        ZWrite Off
         Blend SrcAlpha OneMinusSrcAlpha
 
         Pass

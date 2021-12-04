@@ -28,8 +28,8 @@ Material:
     - _SunRadial: 1.2
     - _value: -0.31
     m_Colors:
-    - _BottomColor: {r: 0.6886792, g: 0.38121885, b: 0.009745443, a: 1}
+    - _BottomColor: {r: 0.6901961, g: 0.38039216, b: 0.007843138, a: 1}
     - _SunPosition: {r: 0, g: 0.5, b: 0, a: 0}
     - _TomColor: {r: 0.12428801, g: 0.30719465, b: 0.46226418, a: 1}
-    - _TopColor: {r: 0.8773585, g: 0.792805, b: 0.69112676, a: 1}
+    - _TopColor: {r: 0.9245283, g: 0.65723014, b: 0.33579564, a: 1}
   m_BuildTextureStacks: []
