@@ -18,8 +18,7 @@ public class HeadFollower : MonoBehaviour
     {
         float angle = Vector3.Angle(forwardDirection,Player.transform.position - this.transform.position);
         
-        Debug.Log(angle);
-
+        
         if (angle < 95)
         {
             this.transform.LookAt(Player.transform.position);
