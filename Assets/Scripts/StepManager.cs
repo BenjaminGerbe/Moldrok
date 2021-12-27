@@ -12,6 +12,8 @@ public class StepManager : MonoBehaviour
     public SpriteRenderer fade;
     public float speed;
     private float count;
+
+    public LayerMask Ground;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +25,11 @@ public class StepManager : MonoBehaviour
     {
       //  fade.color = new Color(0, 0, 0, (fade.color.a + speed * Time.deltaTime)%0.15f);
         SPRT.color = new Color(1,1,1,0);
-        if (this.transform.InverseTransformDirection(RB.velocity).z > 0.1 || this.transform.InverseTransformDirection(RB.velocity).z < -0.1)
+        fade.color = new Color(0,0,0,0);
+        
+        
+        
+        if ( (this.transform.InverseTransformDirection(RB.velocity).z > 0.1 || this.transform.InverseTransformDirection(RB.velocity).z < -0.1) && Physics.Raycast(this.transform.position,Vector3.down,1,Ground )  )
         {
             count -= Time.deltaTime;
 
@@ -31,6 +37,7 @@ public class StepManager : MonoBehaviour
             {
                 
                 SPRT.color = new Color(1,1,1,1);
+                fade.color = new Color(0,0,0,0.01f);
                 count = Timer;
                // Step.localScale = new Vector3( -Step.localScale.x,1,1);
             }
@@ -39,6 +46,7 @@ public class StepManager : MonoBehaviour
         else
         {
             SPRT.color = new Color(1,1,1,0);
+            fade.color = new Color(0,0,0,0);
             count = Timer;
         }
         

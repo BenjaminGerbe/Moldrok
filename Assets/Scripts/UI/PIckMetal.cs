@@ -3,14 +3,36 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class PIckMetal : MonoBehaviour
+public class PickMetal : MonoBehaviour
 {
 
     public DetectIronScript DTS;
 
     public TextMeshProUGUI txt;
 
-    public int counter = 0;
+    private int counter = 0;
+
+    public int getCounter()
+    {
+        return this.counter;
+    }
+
+    public bool Decriment(int i)
+    {
+        if (i > counter)
+        {
+            return false;
+        }
+
+        this.counter -= i;
+        txt.text = counter.ToString();
+
+        return true;
+
+    }
+
+
+
     // Start is called before the first frame update
     void Start()
     {

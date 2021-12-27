@@ -14,7 +14,7 @@ public class StructureGenerator : MonoBehaviour
     public float AvarangeSlope;
     private MapGenerator mp;
 
-   
+    static System.Random prng = new System.Random(17112001);
 
     [System.Serializable]
     public struct ObjectGenerated
@@ -22,7 +22,9 @@ public class StructureGenerator : MonoBehaviour
         
         public GameObject go;
         public Vector3 rotation;
-        
+        public float RateByChunk;
+        public int maxByChunk;
+        public AnimationCurve AC;
 
     }
 
@@ -101,44 +103,73 @@ public class StructureGenerator : MonoBehaviour
     }
 
 
-    public static void CreateStructure(float[,] heightMap,Vector3 coord,GameObject go,float scale, List<ObjectGenerated> obj, AnimationCurve AC,float HieghtMultiplication)
+    public static void CreateStructure(float[,] heightMap,Vector2 coord,GameObject go,float scale, List<ObjectGenerated> obj, AnimationCurve AC,float HieghtMultiplication,int id)
     {
-      
 
+
+     
+        if (coord == Vector2.zero) return;
+        
+        
         if (true)
         {
-            System.Random rng = new System.Random();
-           
-
 
             int x = heightMap.GetLength(0) / 2;
             int y = heightMap.GetLength(0) / 2;
+            Vector2 coord2 = new Vector2Int( (int) (coord.x/MapGenerator.mapChunkSize),(int)(coord.y/MapGenerator.mapChunkSize));
+            
             float v = 0;
             int n = 0;
 
+            prng = new System.Random(MapGenerator.GlobalSeed * id);
+
+
             do
             {
-                x = rng.Next(0, heightMap.GetLength(0));
-                y = rng.Next(0, heightMap.GetLength(0));
+                
+                x = prng.Next(0, heightMap.GetLength(0));
+                y = prng.Next(0, heightMap.GetLength(0));
                 n++;
 
                 v = StructureGenerator.findAvarageSlop(heightMap,new Vector2Int(x,y));
 
-                System.Random prng = new System.Random(0);
-                ObjectGenerated OG = obj[rng.Next(0, obj.Count - 1)];
+                bool find = false;
+                ObjectGenerated OG = obj[0];
+                while (!find)
+                { 
+                    OG = obj[prng.Next(0, obj.Count )];
+
+                    float value = prng.Next(0, 100);
+                    value = value / 100;
+                    
+                 
+                    
+                    if (value <= OG.RateByChunk )
+                    {
+                        find = true;
+                    }
+
+                }
+                
+             
+                
+              
+                
                 GameObject g = GameObject.Instantiate(OG.go, go.transform.position,Quaternion.identity);
 
                 float hieght = HieghtMultiplication * AC.Evaluate(heightMap[y, x]);
 
-                Vector3 position = new Vector3(x - (heightMap.GetLength(0) * scale) / 2, hieght, y - (heightMap.GetLength(0) * scale) / 2);
+                //Vector3 position = new Vector3(x - (heightMap.GetLength(0) * scale) / 2, hieght, y - (heightMap.GetLength(0) * scale) / 2);
                 // g.transform.GetChild(5).GetComponent<TextMeshPro>().text = v.ToString();
 
+                Vector3 position = new Vector3(x - (heightMap.GetLength(0) * scale) / 2, hieght, y - (heightMap.GetLength(0) * scale) / 2);
+                
                 g.transform.SetParent(go.transform);
                 g.transform.localPosition = position;
                 g.transform.Rotate(Vector3.right, OG.rotation.x);
-                g.transform.Rotate(Vector3.up ,Random.Range(-180,180));
+                g.transform.Rotate(Vector3.up ,prng.Next(-180,180));
 
-            } while ( n < 25);
+            } while ( n < 50);
 
          
 

@@ -15,11 +15,26 @@ public class SwitchMenuUI : MonoBehaviour
     private GameObject child;
     public void select(Image btn)
     {
+        
+      
         if (selectedButton != null)
         {
+            if (selectedButton.GetComponent<EvenementClick>())
+            {
+                selectedButton.GetComponent<EvenementClick>().Active = false;
+            }
+
+            
             selectedButton.color = Active;
         }
-      
+        
+        
+
+        if (btn.GetComponent<EvenementClick>())
+        {
+            btn.GetComponent<EvenementClick>().Active = true;
+        }
+        
         btn.color = Selected;
         selectedButton = btn;
 

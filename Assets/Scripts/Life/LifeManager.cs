@@ -24,6 +24,11 @@ public class LifeManager : MonoBehaviour
         }
        
     }
+    
+    public void heal(float incrementation){
+        this.life += incrementation;
+    }
+    
 
 
     // Start is called before the first frame update

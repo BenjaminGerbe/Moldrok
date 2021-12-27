@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,7 +21,7 @@ public class SandStromManager : MonoBehaviour
     public Color fogColorGD;
     public float ValueFadeGD;
     public float WindForceGD;
-    
+    public int EmissionRateGD;
     [Header("SandStrom ")] 
     public Color BottomColorSS;
     public Color TopColorSS;
@@ -28,13 +29,22 @@ public class SandStromManager : MonoBehaviour
     public Color fogColorSS;
     public float ValueFadeSS;
     public float WindForceSS;
-    [Header(" ")] 
+  
+    public int EmissionRateSS;
+    [Header("SandStrom Cycle")] 
+    public float TimeOfCycle;
+    public float TimeOfSandStrom;
+    private float Counter;
+    
+    
+    
+    
     private float countPercentage;
 
     public LifeManager LifeManager;
     public WindZone WZ;
     public Material SandStormChange;
-    
+    public ParticleSystem Particles;
     
     private bool activate = false;
     // Start is called before the first frame update
@@ -46,11 +56,28 @@ public class SandStromManager : MonoBehaviour
         RenderSettings.fogColor = fogColorGD;
         SandStormChange.SetFloat("_Value",ValueFadeGD);
         WZ.windMain = WindForceGD;
+        Counter = TimeOfCycle;
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        Counter -= Time.deltaTime;
+
+        if (Counter < 0 && !activate)
+        {
+            Counter = TimeOfSandStrom;
+            activate = true;
+        }
+
+        if (Counter < 0 && activate)
+        {
+            Counter = TimeOfCycle;
+            activate = false;
+        }
+        
+        
 
         if (Input.GetKeyDown(KeyCode.F))
         {
@@ -73,6 +100,11 @@ public class SandStromManager : MonoBehaviour
         }
         
         
+        var em =  Particles.emission;
+        em.rateOverTime = Mathf.Lerp(EmissionRateGD,EmissionRateSS,countPercentage);
+        
+
+
         SandStormChange.SetColor("_BottomColor",Color.Lerp(BottomColorGD,BottomColorSS,countPercentage)  );
         SandStormChange.SetColor("_TopColor",Color.Lerp(TopColorGD,TopColorSS,countPercentage)  );
         RenderSettings.fogDensity = Mathf.Lerp(fogOpaGD,fogOpaSS,countPercentage);

@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using System.Threading; 
+using System.Threading;
+using Unity.VisualScripting;
 
 
 [RequireComponent(typeof(MapDisplay))]
@@ -33,13 +34,14 @@ public class MapGenerator : MonoBehaviour
     public float lacunarity;
 
     public int seed;
-
+    public static int GlobalSeed;
+    
     public Vector2 Offset;
 
     public float meshHeightMutliplier;
 
     public AnimationCurve meshHeightCurve;
-
+    public static bool isStartGenerate;
     public bool autoUpdate;
     
     Queue<MapThreadInfo<Mapdata>> mapDataThreadInfoQueue = new Queue<MapThreadInfo<Mapdata>>();
@@ -47,6 +49,13 @@ public class MapGenerator : MonoBehaviour
 
     // for colors
     public TerrainType[] regions;
+    private Vector3 grav;
+    private void Start()
+    {
+        GlobalSeed = seed;
+         grav = Physics.gravity;
+        Physics.gravity = Vector3.down *0;
+    }
 
     public void DrawMapInEditer()
     {
@@ -104,35 +113,55 @@ public class MapGenerator : MonoBehaviour
     // Thread for Mesh DATA
 
     // MapData = meshData
-    public void RequestMeshData(Mapdata mapData,int lod,Action<MeshData> callback,float[,] chunkZero)
+    public void RequestMeshData(Mapdata mapData,int lod,Action<MeshData> callback,Vector2 pos)
     {
         ThreadStart threadStart = delegate
         {
-            MeshDataThread(mapData,lod,callback,chunkZero);
+            MeshDataThread(mapData,lod,callback,pos);
         };
 
         new Thread(threadStart).Start();
+        if (!MapGenerator.isStartGenerate)
+        {
 
+            MapGenerator.isStartGenerate = true;
+        }
+        
+      
     }
 
  
 
-    void MeshDataThread(Mapdata mapData,int lod, Action<MeshData> callback,float[,] chunZero)
+    void MeshDataThread(Mapdata mapData,int lod, Action<MeshData> callback,Vector2 pos)
     {
 
-       
-
-        for (int y = 0; y < 239; y++)
+        if (pos.x == 0 && pos.y == 0)
         {
-            for (int x = 0; x < 239; x++)
-            {
 
-                mapData.heightMap[x, y] *= chunZero[x, y];
+            for (int y = 0; y < 239; y++)
+            {
+                for (int x = 0; x < 239; x++)
+                {
+                    float x1 = Mathf.Abs(  x - (239 / 2));
+                    x1 = Mathf.InverseLerp(0, 120,x1); 
+                    float y1 = Mathf.Abs( y - (239 / 2));
+                    y1 = Mathf.InverseLerp(0, 120,y1); 
+                    
+                    
+                    float distance = Mathf.Sqrt((x1*x1) + (y1*y1))  ;
+
+                    distance = Mathf.Clamp01(distance);
+
+                    distance = Mathf.InverseLerp(0.25f,0.8f,distance);
+
+                    
+                    
+                    mapData.heightMap[x, y] *=     distance ;
+
+                }
 
             }
-
         }
-
         MeshData meshData = MeshGenerator.GenerateTerainMesh(mapData.heightMap, meshHeightMutliplier, meshHeightCurve, lod);
 
        
@@ -168,6 +197,15 @@ public class MapGenerator : MonoBehaviour
                 threadInfo.callback(threadInfo.paramter);
             }
         }
+
+ 
+       
+        if (MapGenerator.isStartGenerate)
+        {
+            Physics.gravity = this.grav;
+        }
+       
+        
 
     }
 
