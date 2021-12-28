@@ -42,22 +42,7 @@ public class PickMetal : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-     
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            
-            if (DTS.getDetected() != null)
-            {
-                Destroy(DTS.getDetected() );
-                counter++;
-                txt.text = counter.ToString();
-            }
-            
-            
-            
-            
-            
-            
-        }
+        txt.text = counter.ToString();
+        
     }
 }

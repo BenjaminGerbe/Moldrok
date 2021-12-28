@@ -41,6 +41,6 @@ public class LifeManager : MonoBehaviour
     void Update()
     {
         
-        lifeTxt.text = life.ToString();
+        lifeTxt.text =  (Mathf.Round(life)).ToString();
     }
 }

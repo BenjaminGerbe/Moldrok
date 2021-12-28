@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6444661087335487116}
   - component: {fileID: 2567343818224436288}
   - component: {fileID: 8390707544244842106}
+  - component: {fileID: 6349571174882675976}
   m_Layer: 0
   m_Name: Iron
   m_TagString: Iron
@@ -97,6 +98,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6349571174882675976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 837919005596766192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59fa0acfa7316ac4f9027b301e427e5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Id: fer2
+  Weight: 1
+  Value: 500
+  texture: {fileID: 21300000, guid: dc35734711226214194bd9fb277c3f6e, type: 3}
 --- !u!1001 &7170638213394328582
 PrefabInstance:
   m_ObjectHideFlags: 0

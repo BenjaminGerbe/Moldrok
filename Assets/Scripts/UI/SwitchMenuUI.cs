@@ -1,19 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SwitchMenuUI : MonoBehaviour
 {
-    public List<Image> btns;
-    private Image selectedButton;
+    public List<TextMeshProUGUI> btns;
+    private TextMeshProUGUI selectedButton;
     public Color Active;
     public Color Selected;
     public Transform target;
     private int idx = 0;
     public Transform Player;
     private GameObject child;
-    public void select(Image btn)
+    public void select(TextMeshProUGUI btn)
     {
         
       
@@ -46,7 +47,7 @@ public class SwitchMenuUI : MonoBehaviour
 
         child = this.transform.GetChild(0).gameObject;
 
-        foreach (Image btn in btns)
+        foreach (TextMeshProUGUI btn in btns)
         {
             btn.color = Active;
         }
@@ -57,6 +58,7 @@ public class SwitchMenuUI : MonoBehaviour
     
     private  void DeltaMouse()
     {
+
         if (idx >= btns.Count)
         {
             idx = 0;
