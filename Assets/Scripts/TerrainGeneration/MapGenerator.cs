@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.Threading;
 using Unity.VisualScripting;
+using Random = System.Random;
 
 
 [RequireComponent(typeof(MapDisplay))]
@@ -52,6 +53,8 @@ public class MapGenerator : MonoBehaviour
     private Vector3 grav;
     private void Start()
     {
+        Random rdn = new Random();
+        seed = rdn.Next(int.MinValue, int.MaxValue);
         GlobalSeed = seed;
          grav = Physics.gravity;
         Physics.gravity = Vector3.down *0;
